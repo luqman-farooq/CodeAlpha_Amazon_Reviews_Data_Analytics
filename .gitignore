@@ -1,0 +1,9 @@
+# Dataset
+data/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Large generated sentiment data
+sentiment_results/sentiment_results.csv
