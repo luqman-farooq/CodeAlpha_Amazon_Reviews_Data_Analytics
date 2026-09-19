@@ -1,208 +1,252 @@
-import sqlite3
-import pandas as pd
-import matplotlib.pyplot as plt
+# Amazon Reviews Data Analytics
 
-# ============================================================
-# DATABASE CONNECTION
-# ============================================================
+## Project Overview
 
-DB_PATH = r"C:\Users\DELL\Desktop\Amazon_Reviews_Project\data\Reviews.sqlite\Reviews.sqlite"
+This project analyzes Amazon customer reviews using Python, SQLite, Pandas, Matplotlib, and NLTK. The project was completed as part of the CodeAlpha Data Analytics Internship.
 
-conn = sqlite3.connect(DB_PATH)
+The analysis focuses on three tasks:
 
-df = pd.read_sql_query("SELECT * FROM Reviews", conn)
+* Task 2 — Exploratory Data Analysis (EDA)
+* Task 3 — Data Visualization
+* Task 4 — Sentiment Analysis
 
-conn.close()
+## Dataset
 
-print("Dataset loaded successfully!")
-print("Rows:", len(df))
+The dataset contains **568,454 Amazon customer reviews** with 10 columns:
 
-# ============================================================
-# CREATE OUTPUT FOLDER
-# ============================================================
+* Id
+* ProductId
+* UserId
+* ProfileName
+* HelpfulnessNumerator
+* HelpfulnessDenominator
+* Score
+* Time
+* Summary
+* Text
 
-import os
+The SQLite database is stored locally and is excluded from GitHub because of its large size.
 
-os.makedirs("charts", exist_ok=True)
+## Task 2 — Exploratory Data Analysis
 
-# ============================================================
-# 1. RATING DISTRIBUTION
-# ============================================================
+The dataset was analyzed to understand its structure, quality, ratings, review length, helpfulness, product activity, and yearly trends.
 
-rating_counts = df["Score"].value_counts().sort_index()
+### Dataset Summary
 
-plt.figure(figsize=(8, 5))
+| Metric                    |            Result |
+| ------------------------- | ----------------: |
+| Total Reviews             |           568,454 |
+| Total Columns             |                10 |
+| Missing Values            |                 0 |
+| Duplicate Rows            |                 0 |
+| Average Rating            |              4.18 |
+| Average Review Length     | 436.22 characters |
+| Average Helpfulness Ratio |              0.78 |
 
-rating_counts.plot(kind="bar")
+### Rating Distribution
 
-plt.title("Amazon Reviews - Rating Distribution")
-plt.xlabel("Star Rating")
-plt.ylabel("Number of Reviews")
-plt.xticks(rotation=0)
+| Rating  | Reviews | Percentage |
+| ------- | ------: | ---------: |
+| 1 Star  |  52,268 |      9.19% |
+| 2 Stars |  29,769 |      5.24% |
+| 3 Stars |  42,640 |      7.50% |
+| 4 Stars |  80,655 |     14.19% |
+| 5 Stars | 363,122 |     63.88% |
 
-plt.tight_layout()
-plt.savefig("charts/rating_distribution.png", dpi=300)
-plt.show()
+The majority of reviews have a 5-star rating.
 
-# ============================================================
-# 2. RATING PERCENTAGE
-# ============================================================
+### Yearly Review Trend
 
-rating_percentage = (
-    df["Score"].value_counts(normalize=True)
-    .sort_index() * 100
-)
+The number of reviews increased over time, with the highest number of reviews recorded in **2012**, with 198,659 reviews.
 
-plt.figure(figsize=(8, 5))
+### Product Analysis
 
-rating_percentage.plot(kind="bar")
+The product with the highest number of reviews was:
 
-plt.title("Percentage of Reviews by Rating")
-plt.xlabel("Star Rating")
-plt.ylabel("Percentage (%)")
-plt.xticks(rotation=0)
+* Product ID: `B007JFMH8M`
+* Number of Reviews: 913
 
-plt.tight_layout()
-plt.savefig("charts/rating_percentage.png", dpi=300)
-plt.show()
+The highest average rating among the analyzed products was:
 
-# ============================================================
-# 3. REVIEWS OVER TIME
-# ============================================================
+* Product ID: `B000ED9L9E`
+* Average Rating: 4.97
+* Number of Reviews: 113
 
-df["Date"] = pd.to_datetime(
-    df["Time"],
-    unit="s",
-    errors="coerce"
-)
+### Data Quality
 
-df["Year"] = df["Date"].dt.year
+The dataset contains no missing values and no duplicate records.
 
-yearly_reviews = df["Year"].value_counts().sort_index()
+Two records were identified where `HelpfulnessNumerator` was greater than `HelpfulnessDenominator`, which can be treated as a small data-quality anomaly.
 
-plt.figure(figsize=(10, 5))
+## Task 3 — Data Visualization
 
-yearly_reviews.plot(kind="line", marker="o")
+Matplotlib was used to create visualizations for understanding patterns in the Amazon reviews dataset.
 
-plt.title("Amazon Reviews Over Time")
-plt.xlabel("Year")
-plt.ylabel("Number of Reviews")
+### Rating Distribution
 
-plt.grid(True)
+![Rating Distribution](charts/rating_distribution.png)
 
-plt.tight_layout()
-plt.savefig("charts/reviews_over_time.png", dpi=300)
-plt.show()
+### Rating Percentage
 
-# ============================================================
-# 4. AVERAGE RATING BY YEAR
-# ============================================================
+![Rating Percentage](charts/rating_percentage.png)
 
-yearly_rating = (
-    df.groupby("Year")["Score"]
-    .mean()
-)
+### Reviews Over Time
 
-plt.figure(figsize=(10, 5))
+![Reviews Over Time](charts/reviews_over_time.png)
 
-yearly_rating.plot(kind="line", marker="o")
+### Average Rating Over Time
 
-plt.title("Average Rating Over Time")
-plt.xlabel("Year")
-plt.ylabel("Average Rating")
+![Average Rating Over Time](charts/average_rating_over_time.png)
 
-plt.tight_layout()
-plt.savefig("charts/average_rating_over_time.png", dpi=300)
-plt.show()
+### Top 10 Products by Review Count
 
-# ============================================================
-# 5. TOP 10 MOST REVIEWED PRODUCTS
-# ============================================================
+![Top 10 Products](charts/top_10_products.png)
 
-top_products = (
-    df["ProductId"]
-    .value_counts()
-    .head(10)
-    .sort_values()
-)
+### Review Length Distribution
 
-plt.figure(figsize=(10, 6))
+![Review Length Distribution](charts/review_length_distribution.png)
 
-top_products.plot(kind="barh")
+### Helpfulness by Rating
 
-plt.title("Top 10 Most Reviewed Products")
-plt.xlabel("Number of Reviews")
-plt.ylabel("Product ID")
+![Helpfulness by Rating](charts/helpfulness_by_rating.png)
 
-plt.tight_layout()
-plt.savefig("charts/top_10_products.png", dpi=300)
-plt.show()
+## Task 4 — Sentiment Analysis
 
-# ============================================================
-# 6. REVIEW LENGTH DISTRIBUTION
-# ============================================================
+Sentiment analysis was performed using **NLTK VADER**.
 
-df["ReviewLength"] = (
-    df["Text"]
-    .fillna("")
-    .astype(str)
-    .str.len()
-)
+The review `Summary` and `Text` fields were combined and analyzed to calculate sentiment scores.
 
-plt.figure(figsize=(9, 5))
+Reviews were classified into three categories:
 
-plt.hist(df["ReviewLength"], bins=50)
+* **Positive** — compound sentiment score ≥ 0.05
+* **Neutral** — compound sentiment score between -0.05 and 0.05
+* **Negative** — compound sentiment score ≤ -0.05
 
-plt.title("Distribution of Review Length")
-plt.xlabel("Review Length (Characters)")
-plt.ylabel("Number of Reviews")
+### Sentiment Outputs
 
-plt.tight_layout()
-plt.savefig("charts/review_length_distribution.png", dpi=300)
-plt.show()
+The sentiment analysis generated:
 
-# ============================================================
-# 7. HELPFULNESS VS RATING
-# ============================================================
+* Sentiment distribution chart
+* Sentiment percentage chart
+* Sentiment vs. rating chart
+* Sentiment results CSV file
+* Sentiment summary CSV file
 
-df["HelpfulnessRatio"] = (
-    df["HelpfulnessNumerator"]
-    / df["HelpfulnessDenominator"].replace(0, pd.NA)
-)
+### Sentiment Distribution
 
-helpfulness_by_rating = (
-    df.groupby("Score")["HelpfulnessRatio"]
-    .mean()
-)
+![Sentiment Distribution](sentiment_results/sentiment_distribution.png)
 
-plt.figure(figsize=(8, 5))
+### Sentiment Percentage
 
-helpfulness_by_rating.plot(
-    kind="bar"
-)
+![Sentiment Percentage](sentiment_results/sentiment_percentage.png)
 
-plt.title("Average Helpfulness Ratio by Rating")
-plt.xlabel("Star Rating")
-plt.ylabel("Average Helpfulness Ratio")
-plt.xticks(rotation=0)
+### Sentiment vs Rating
 
-plt.tight_layout()
-plt.savefig("charts/helpfulness_by_rating.png", dpi=300)
-plt.show()
+![Sentiment vs Rating](sentiment_results/sentiment_vs_rating.png)
 
-# ============================================================
-# FINAL MESSAGE
-# ============================================================
+## Key Findings
 
-print("\n" + "=" * 60)
-print("TASK 3 - DATA VISUALIZATION COMPLETED!")
-print("=" * 60)
+* The dataset contains 568,454 customer reviews.
+* The average customer rating is 4.18 out of 5.
+* 5-star reviews represent the largest rating category.
+* 2012 contains the highest number of reviews in the dataset.
+* The dataset has no missing values or duplicate records.
+* Review length varies significantly across customer reviews.
+* Helpfulness information provides additional insight into customer engagement.
+* Sentiment analysis provides another way to understand customer opinions beyond star ratings.
 
-print("\nCharts saved inside the 'charts' folder:")
-print("1. rating_distribution.png")
-print("2. rating_percentage.png")
-print("3. reviews_over_time.png")
-print("4. average_rating_over_time.png")
-print("5. top_10_products.png")
-print("6. review_length_distribution.png")
-print("7. helpfulness_by_rating.png")
+## Technologies Used
+
+* Python
+* Pandas
+* SQLite
+* Matplotlib
+* NLTK
+* VADER Sentiment Analysis
+
+## Project Structure
+
+```text
+Amazon_Reviews_Project/
+│
+├── analysis.py
+├── visualization.py
+├── sentiment.py
+├── README.md
+├── requirements.txt
+├── .gitignore
+│
+├── charts/
+│   ├── rating_distribution.png
+│   ├── rating_percentage.png
+│   ├── reviews_over_time.png
+│   ├── average_rating_over_time.png
+│   ├── top_10_products.png
+│   ├── review_length_distribution.png
+│   └── helpfulness_by_rating.png
+│
+├── sentiment_results/
+│   ├── sentiment_distribution.png
+│   ├── sentiment_percentage.png
+│   ├── sentiment_vs_rating.png
+│   ├── sentiment_summary.csv
+│   └── sentiment_results.csv
+│
+└── data/
+    └── Reviews.sqlite/
+        └── Reviews.sqlite
+```
+
+## How to Run
+
+### 1. Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### 2. Run Exploratory Data Analysis
+
+```bash
+python analysis.py
+```
+
+### 3. Generate Visualizations
+
+```bash
+python visualization.py
+```
+
+### 4. Run Sentiment Analysis
+
+```bash
+python sentiment.py
+```
+
+## Project Objectives
+
+The main objectives of this project are:
+
+* Perform exploratory data analysis on customer reviews
+* Identify rating and review trends
+* Analyze product review activity
+* Create meaningful data visualizations
+* Perform sentiment analysis using NLP
+* Understand the relationship between sentiment and star ratings
+* Gain practical experience with Python-based data analytics
+
+## Conclusion
+
+This project demonstrates a complete data analytics workflow using a large Amazon reviews dataset. It covers exploratory data analysis, visualization, and sentiment analysis to identify meaningful patterns in customer feedback.
+
+The project provides practical experience in data handling, statistical analysis, visualization, SQLite databases, and Natural Language Processing.
+
+## Internship Information
+
+**Program:** CodeAlpha Data Analytics Internship
+
+**Completed Tasks:**
+
+* Task 2 — Exploratory Data Analysis
+* Task 3 — Data Visualization
+* Task 4 — Sentiment Analysis
