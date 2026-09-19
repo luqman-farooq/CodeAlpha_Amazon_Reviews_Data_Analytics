@@ -7,8 +7,7 @@ import matplotlib.pyplot as plt
 # 1. DATABASE CONNECTION
 # ============================================================
 
-DB_PATH = r"C:\Users\DELL\Desktop\Amazon_Reviews_Project\data\Reviews.sqlite\Reviews.sqlite"
-
+DB_PATH = "data/Reviews.sqlite/Reviews.sqlite"
 conn = sqlite3.connect(DB_PATH)
 
 df = pd.read_sql_query("SELECT * FROM Reviews", conn)
