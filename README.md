@@ -1,5 +1,3 @@
-
-````markdown
 # 🛒 Amazon Reviews Data Analytics Dashboard
 
 An interactive **Amazon Reviews Data Analytics Dashboard** developed using Python, Streamlit, Pandas, NumPy, SQLite, and Plotly.
@@ -14,14 +12,14 @@ Amazon customer reviews contain valuable information about customer satisfaction
 
 This project transforms a large Amazon Reviews dataset into an interactive analytics dashboard where users can explore the data through:
 
-- Interactive filters
-- KPI cards
-- Data-quality checks
-- Interactive Plotly charts
-- Product-level analysis
-- Sentiment analysis
-- Review trends
-- Downloadable filtered data
+* Interactive filters
+* KPI cards
+* Data-quality checks
+* Interactive Plotly charts
+* Product-level analysis
+* Sentiment analysis
+* Review trends
+* Downloadable filtered data
 
 The project combines data analysis with an interactive **Streamlit dashboard** to make the results easier to explore and understand.
 
@@ -45,9 +43,37 @@ Overview
 ├── Sentiment Analysis
 │
 └── Data Quality
-````
+```
 
 Users can navigate between these sections using the sidebar.
+
+---
+
+## 📸 Dashboard Preview
+
+### 🏠 Overview
+
+![Overview Dashboard](screenshots/overview.png)
+
+### 📊 Exploratory Data Analysis
+
+![EDA Dashboard](screenshots/eda.png)
+
+### 📈 Visualizations
+
+![Visualizations Dashboard](screenshots/visualizations.png)
+
+### 🛍️ Product Analysis
+
+![Product Analysis Dashboard](screenshots/product-analysis.png)
+
+### 😊 Sentiment Analysis
+
+![Sentiment Analysis Dashboard](screenshots/sentiment.png)
+
+### ✅ Data Quality
+
+![Data Quality Dashboard](screenshots/data-quality.png)
 
 ---
 
@@ -281,6 +307,14 @@ Amazon_Reviews_Project/
 ├── README.md
 ├── .gitignore
 │
+├── screenshots/
+│   ├── overview.png
+│   ├── eda.png
+│   ├── visualizations.png
+│   ├── product-analysis.png
+│   ├── sentiment.png
+│   └── data-quality.png
+│
 ├── data/
 │   └── Reviews.sqlite/
 │       └── Reviews.sqlite
@@ -474,5 +508,3 @@ The project provided practical experience with **Python, Pandas, NumPy, SQLite, 
 **Project Type:** Data Analytics / NLP / Interactive Dashboard
 
 **Internship:** CodeAlpha Data Analytics Internship
-
-````
