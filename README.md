@@ -1,226 +1,279 @@
-# Amazon Reviews Data Analytics
 
-## Project Overview
+````markdown
+# 🛒 Amazon Reviews Data Analytics Dashboard
 
-This project was developed as part of the **CodeAlpha Data Analytics Internship**.
+An interactive **Amazon Reviews Data Analytics Dashboard** developed using Python, Streamlit, Pandas, NumPy, SQLite, and Plotly.
 
-The project analyzes a large Amazon Reviews dataset to identify patterns in customer ratings, review activity, product performance, review helpfulness, and customer sentiment.
+This project was developed as part of the **CodeAlpha Data Analytics Internship** and focuses on exploratory data analysis, data visualization, product analysis, sentiment analysis, and data-quality assessment of a large Amazon customer reviews dataset.
 
-Three data analytics tasks were completed:
+---
 
-- **Task 2 — Exploratory Data Analysis (EDA)**
-- **Task 3 — Data Visualization**
-- **Task 4 — Sentiment Analysis**
+## 📌 Project Overview
 
-## Dataset
+Amazon customer reviews contain valuable information about customer satisfaction, product popularity, review behavior, helpfulness, and sentiment.
 
-The dataset contains **568,454 Amazon customer reviews** and **10 variables**.
+This project transforms a large Amazon Reviews dataset into an interactive analytics dashboard where users can explore the data through:
 
-### Dataset Columns
+- Interactive filters
+- KPI cards
+- Data-quality checks
+- Interactive Plotly charts
+- Product-level analysis
+- Sentiment analysis
+- Review trends
+- Downloadable filtered data
 
-- Id
-- ProductId
-- UserId
-- ProfileName
-- HelpfulnessNumerator
-- HelpfulnessDenominator
-- Score
-- Time
-- Summary
-- Text
+The project combines data analysis with an interactive **Streamlit dashboard** to make the results easier to explore and understand.
+
+---
+
+## 📊 Dashboard
+
+The main application is built with **Streamlit**.
+
+The dashboard contains the following sections:
+
+```text
+Overview
+│
+├── EDA
+│
+├── Visualizations
+│
+├── Product Analysis
+│
+├── Sentiment Analysis
+│
+└── Data Quality
+````
+
+Users can navigate between these sections using the sidebar.
+
+---
+
+## 🏠 Overview
+
+The Overview section provides a quick summary of the review dataset.
+
+### Key Performance Indicators
+
+The dashboard displays:
+
+* Total Reviews
+* Average Rating
+* Average Review Length
+* Helpfulness Percentage
+
+### Overview Visualizations
+
+Interactive charts include:
+
+* Rating Distribution
+* Rating Share
+* Reviews Trend by Year
+
+These visualizations provide a quick understanding of customer rating patterns and review activity.
+
+---
+
+## 🔎 Exploratory Data Analysis
+
+The EDA section provides detailed information about the dataset structure and quality.
+
+### EDA Metrics
+
+* Number of Rows
+* Number of Columns
+* Missing Values
+* Duplicate Rows
+
+### Additional Analysis
+
+The dashboard also provides:
+
+* Review Length Distribution
+* Dataset Preview
+* Column Information
+* Data Types
+* Basic statistical information
+
+---
+
+## 📈 Data Visualizations
+
+Interactive visualizations are created using **Plotly**.
+
+### Visualizations Included
+
+1. Rating Distribution
+2. Reviews Over Time
+3. Average Rating by Year
+4. Helpful Votes vs Total Votes
+5. Average Review Length by Rating
+
+The charts are interactive and support features such as hover information, zooming, and filtering.
+
+---
+
+## 📦 Product Analysis
+
+The Product Analysis section focuses on product-level review behavior.
+
+### Analysis Includes
+
+* Top products by review count
+* Top products by average rating
+* Product ID search
+* Product-based filtering
+
+Users can enter a Product ID in the sidebar to analyze a specific product.
+
+---
+
+## 😊 Sentiment Analysis
+
+Sentiment analysis is included to understand the emotional tone of customer reviews.
+
+The project uses sentiment results generated from customer review text.
+
+### Sentiment Categories
+
+Reviews can be classified into:
+
+* Positive
+* Neutral
+* Negative
+
+The dashboard displays:
+
+* Sentiment distribution
+* Sentiment counts
+* Sentiment visualization
+
+Sentiment results are loaded from:
+
+```text
+sentiment_results/sentiment_results.csv
+```
+
+---
+
+## 🧹 Data Quality Analysis
+
+The Data Quality section evaluates the reliability and consistency of the dataset.
+
+### Rating Quality
+
+The dashboard checks:
+
+* Valid Ratings
+* Invalid Ratings
+* Average Rating
+
+### Helpfulness Data Quality
+
+The dashboard checks:
+
+* Negative Helpfulness Numerator
+* Negative Helpfulness Denominator
+* Helpfulness Numerator greater than Denominator
+
+### General Data Quality
+
+The dashboard checks:
+
+* Missing Values
+* Duplicate Rows
+* Total Columns
+
+A detailed column-quality report is also provided.
+
+---
+
+## 🎛️ Interactive Filters
+
+The dashboard provides several filters through the sidebar.
+
+### Available Filters
+
+* Product ID Search
+* Rating
+* Year
+
+All dashboard analysis updates according to the selected filters.
+
+Users can also download the filtered dataset as a CSV file.
+
+---
+
+## 🗃️ Dataset
+
+The project uses the **Amazon Fine Food Reviews dataset**.
+
+The dataset contains information such as:
+
+* Id
+* ProductId
+* UserId
+* ProfileName
+* HelpfulnessNumerator
+* HelpfulnessDenominator
+* Score
+* Time
+* Summary
+* Text
+
+The original dataset contains approximately **568,454 customer reviews**.
 
 The dataset is stored locally in SQLite format.
 
-> The original dataset is not included in this GitHub repository because of its large file size.
+> The complete database file is not included in the GitHub repository because of its large file size.
 
-## Task 2 — Exploratory Data Analysis
+---
 
-Exploratory Data Analysis was performed using **Python and Pandas** to understand the structure, quality, and characteristics of the dataset.
+## 🧹 Data Processing
 
-### Analysis Performed
+The application performs several data-processing steps before analysis.
 
-- Dataset dimensions and structure
-- Column and data type analysis
-- Missing value analysis
-- Duplicate record analysis
-- Statistical summary
-- Rating distribution
-- Average customer rating
-- Review length analysis
-- Helpfulness analysis
-- Reviews by year
-- Most-reviewed products
-- Product average ratings
-- High-rating and low-rating reviews
-- Basic data-quality anomaly checks
+### Processing Steps
 
-### Main Script
+1. Load review data from SQLite.
+2. Detect relevant dataset columns.
+3. Convert ratings to numeric values.
+4. Convert review timestamps into readable dates.
+5. Extract review years.
+6. Calculate helpfulness ratios.
+7. Calculate review length.
+8. Handle missing numeric values.
+9. Detect duplicate records.
+10. Perform data-quality checks.
 
-`analysis.py`
+---
 
-### EDA Results
+## 📊 Key Analytical Questions
 
-- **568,454 total reviews**
-- **10 columns**
-- **0 missing values**
-- **0 duplicate records**
-- **Average rating: 4.18 / 5**
-- **Average review length: 436 characters**
-- **Average helpfulness ratio: 0.78**
+The dashboard helps answer questions such as:
 
-### Rating Distribution
+* What is the average customer rating?
+* How are ratings distributed?
+* How has review activity changed over time?
+* Which products receive the most reviews?
+* Which products have high average ratings?
+* How helpful are customer reviews?
+* Does review length vary by rating?
+* Are there invalid ratings?
+* Are there duplicate records?
+* What is the sentiment distribution?
+* How can the quality of the review data be assessed?
 
-| Rating | Reviews | Percentage |
-|---|---:|---:|
-| 1 Star | 52,268 | 9.19% |
-| 2 Stars | 29,769 | 5.24% |
-| 3 Stars | 42,640 | 7.50% |
-| 4 Stars | 80,655 | 14.19% |
-| 5 Stars | 363,122 | 63.88% |
+---
 
-The majority of reviews are **5-star reviews**, representing **63.88%** of the dataset.
-
-Reviews with ratings of **4 or 5 stars account for 78.07%** of all reviews.
-
-Reviews with ratings of **1 or 2 stars account for 14.43%** of the dataset.
-
-### Review Activity Over Time
-
-The highest number of reviews was recorded in **2012**, with **198,659 reviews**.
-
-### Product Analysis
-
-The most-reviewed product received **913 reviews**.
-
-Product ID:
-
-`B007JFMH8M`
-
-The highest average rating among the analyzed products was approximately **4.97 / 5**.
-
-### Data Quality
-
-The analysis found:
-
-- No missing values
-- No duplicate records
-- No ratings below 1
-- No ratings above 5
-- No negative helpfulness values
-
-Two records were identified where the helpfulness numerator was greater than the denominator. These records may require further data-quality investigation.
-
-## Task 3 — Data Visualization
-
-Several visualizations were created using **Matplotlib**.
-
-### Visualizations Created
-
-1. Rating Distribution
-2. Rating Percentage
-3. Reviews Over Time
-4. Average Rating Over Time
-5. Top 10 Products by Review Count
-6. Review Length Distribution
-7. Helpfulness by Rating
-
-All visualization files are stored in the `charts/` folder.
-
-### Main Script
-
-`visualization.py`
-
-### Rating Distribution
-
-![Rating Distribution](charts/rating_distribution.png)
-
-### Reviews Over Time
-
-![Reviews Over Time](charts/reviews_over_time.png)
-
-### Review Length Distribution
-
-![Review Length Distribution](charts/review_length_distribution.png)
-
-## Task 4 — Sentiment Analysis
-
-Sentiment analysis was performed using **NLTK VADER (Valence Aware Dictionary and sEntiment Reasoner)**.
-
-The `Summary` and `Text` fields were combined to analyze the overall sentiment of each review.
-
-Each review was classified into:
-
-- **Positive**
-- **Neutral**
-- **Negative**
-
-### Sentiment Classification
-
-- Compound Score >= 0.05 → Positive
-- Compound Score <= -0.05 → Negative
-- Between -0.05 and 0.05 → Neutral
-
-The sentiment analysis also compares customer sentiment with their corresponding star ratings.
-
-### Main Script
-
-`sentiment.py`
-
-### Sentiment Outputs
-
-The following files are generated inside the `sentiment_results/` folder:
-
-- sentiment_distribution.png
-- sentiment_percentage.png
-- sentiment_vs_rating.png
-- sentiment_results.csv
-- sentiment_summary.csv
-
-### Sentiment Distribution
-
-![Sentiment Distribution](sentiment_results/sentiment_distribution.png)
-
-### Sentiment Percentage
-
-![Sentiment Percentage](sentiment_results/sentiment_percentage.png)
-
-### Sentiment vs Rating
-
-![Sentiment vs Rating](sentiment_results/sentiment_vs_rating.png)
-
-> Exact sentiment percentages are generated by `sentiment.py` and stored in `sentiment_summary.csv`.
-
-## Key Findings
-
-- The dataset contains **568,454 reviews**.
-- The overall average customer rating is **4.18 out of 5**.
-- **5-star reviews represent 63.88%** of all reviews.
-- **4- and 5-star reviews represent 78.07%** of the dataset.
-- **1- and 2-star reviews represent 14.43%** of the dataset.
-- The average review length is approximately **436 characters**.
-- The average helpfulness ratio is approximately **0.78**.
-- The dataset contains **no missing values**.
-- The dataset contains **no duplicate rows**.
-- Review activity was highest in **2012**, with **198,659 reviews**.
-- The most-reviewed product received **913 reviews**.
-- Basic anomaly checking identified **2 records** where the helpfulness numerator was greater than the denominator.
-
-Overall, the dataset shows a strong concentration of positive customer ratings and substantial growth in review activity in the later years covered by the dataset.
-
-## Technologies Used
-
-- Python
-- Pandas
-- Matplotlib
-- SQLite
-- NLTK
-- VADER Sentiment Analysis
-
-## Project Structure
+## 📁 Project Structure
 
 ```text
 Amazon_Reviews_Project/
 │
+├── app.py
 ├── analysis.py
 ├── visualization.py
 ├── sentiment.py
@@ -228,84 +281,198 @@ Amazon_Reviews_Project/
 ├── README.md
 ├── .gitignore
 │
-├── charts/
-│   ├── rating_distribution.png
-│   ├── rating_percentage.png
-│   ├── reviews_over_time.png
-│   ├── average_rating_over_time.png
-│   ├── top_10_products.png
-│   ├── review_length_distribution.png
-│   └── helpfulness_by_rating.png
+├── data/
+│   └── Reviews.sqlite/
+│       └── Reviews.sqlite
 │
-├── sentiment_results/
-│   ├── sentiment_distribution.png
-│   ├── sentiment_percentage.png
-│   ├── sentiment_vs_rating.png
-│   └── sentiment_summary.csv
-│
-└── data/
-    └── Local Amazon Reviews Dataset
-````
+└── sentiment_results/
+    └── sentiment_results.csv
+```
 
-## How to Run the Project
+---
 
-### 1. Install Dependencies
+## 🛠️ Technologies Used
+
+| Technology | Purpose                           |
+| ---------- | --------------------------------- |
+| Python     | Application and data processing   |
+| Streamlit  | Interactive dashboard             |
+| Pandas     | Data cleaning and analysis        |
+| NumPy      | Numerical operations              |
+| SQLite     | Data storage and database loading |
+| Plotly     | Interactive visualizations        |
+| NLTK       | Natural Language Processing       |
+| VADER      | Sentiment Analysis                |
+
+---
+
+## ▶️ How to Run the Dashboard
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/luqman-farooq/CodeAlpha_Amazon_Reviews_Data_Analytics.git
+```
+
+### 2. Open the Project Folder
+
+```bash
+cd CodeAlpha_Amazon_Reviews_Data_Analytics
+```
+
+### 3. Install Dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 2. Run Exploratory Data Analysis
+### 4. Run the Streamlit Dashboard
 
 ```bash
-python analysis.py
+streamlit run app.py
 ```
 
-### 3. Generate Data Visualizations
+Alternatively:
 
 ```bash
-python visualization.py
+python -m streamlit run app.py
 ```
 
-### 4. Run Sentiment Analysis
+The Streamlit application will open in the browser.
 
-```bash
-python sentiment.py
-```
+---
 
-## Project Objectives
+## 📥 Download Filtered Data
 
-1. Understand the structure and quality of Amazon review data.
-2. Analyze customer rating patterns.
-3. Identify trends in review activity.
-4. Analyze product-level review behavior.
-5. Understand review length and helpfulness.
-6. Create meaningful data visualizations.
-7. Perform sentiment analysis using NLP.
-8. Compare customer sentiment with star ratings.
-9. Gain practical experience with a large real-world dataset.
+The dashboard provides a **Download Filtered CSV** feature.
 
-## Conclusion
+Users can:
+
+1. Search for a Product ID.
+2. Select specific ratings.
+3. Select specific years.
+4. Apply the filters.
+5. Download the filtered dataset as a CSV file.
+
+---
+
+## 🎯 Project Objectives
+
+The main objectives of this project are:
+
+1. Understand the structure of Amazon customer review data.
+2. Perform exploratory data analysis.
+3. Analyze customer rating patterns.
+4. Identify review activity trends.
+5. Analyze product-level review behavior.
+6. Analyze review helpfulness.
+7. Study review length.
+8. Perform sentiment analysis.
+9. Identify potential data-quality issues.
+10. Create interactive data visualizations.
+11. Build a user-friendly analytics dashboard.
+12. Gain practical experience working with a large real-world dataset.
+
+---
+
+## 📌 Internship Tasks
+
+This project was completed as part of the:
+
+**CodeAlpha Data Analytics Internship**
+
+### Completed Tasks
+
+* **Task 2 — Exploratory Data Analysis**
+* **Task 3 — Data Visualization**
+* **Task 4 — Sentiment Analysis**
+
+The final project combines these tasks into an interactive Streamlit analytics dashboard.
+
+---
+
+## 💡 Key Insights
+
+The exploratory analysis identified several important patterns in the dataset:
+
+* The dataset contains approximately **568,454 reviews**.
+* The average customer rating is approximately **4.18 / 5**.
+* 5-star reviews form the largest rating category.
+* 4- and 5-star reviews represent the majority of the dataset.
+* Review activity increased significantly during the later years covered by the dataset.
+* Product-level review counts vary considerably.
+* Helpfulness information can be used to understand customer interaction with reviews.
+* Data-quality checks can identify unusual helpfulness records.
+* Customer review text can be analyzed to identify sentiment.
+
+> Dashboard metrics may change when filters are applied because the dashboard recalculates the analysis for the selected data.
+
+---
+
+## 🔮 Future Improvements
+
+Possible future enhancements include:
+
+* Advanced NLP analysis
+* Word cloud visualization
+* Topic modeling
+* Review keyword analysis
+* Product category analysis
+* Monthly review trends
+* Advanced sentiment classification
+* Sentiment vs rating analysis inside the dashboard
+* Additional product KPIs
+* Streamlit Cloud deployment
+* Automated dashboard reporting
+
+---
+
+## 🧑‍💻 Author
+
+**Luqman Farooq**
+
+Amazon Reviews Data Analytics Project
+
+**CodeAlpha Data Analytics Internship**
+
+---
+
+## 🏁 Conclusion
 
 This project demonstrates a complete data analytics workflow using a large real-world Amazon Reviews dataset.
 
-The project combines data loading, data quality checking, exploratory data analysis, statistical analysis, data visualization, natural language processing, and sentiment analysis.
+The project combines:
 
-Through this project, practical experience was gained with **Python, Pandas, Matplotlib, SQLite, NLTK, and VADER sentiment analysis**.
+```text
+Data Loading
+      ↓
+Data Cleaning
+      ↓
+Exploratory Data Analysis
+      ↓
+Data Quality Analysis
+      ↓
+Data Visualization
+      ↓
+Product Analysis
+      ↓
+Sentiment Analysis
+      ↓
+Interactive Streamlit Dashboard
+```
 
-The analysis provides useful insights into customer ratings, review behavior, product activity, helpfulness, and customer sentiment.
+The final dashboard provides an interactive way to explore customer ratings, review activity, product performance, review helpfulness, sentiment, and overall data quality.
 
-## Internship Information
+The project provided practical experience with **Python, Pandas, NumPy, SQLite, Plotly, Streamlit, NLTK, and VADER sentiment analysis**.
 
-**Program:** CodeAlpha Data Analytics Internship
+---
 
-**Completed Tasks:**
+## ⭐ Project Repository
 
-* Task 2 — Exploratory Data Analysis
-* Task 3 — Data Visualization
-* Task 4 — Sentiment Analysis
+**Repository Name:** `CodeAlpha_Amazon_Reviews_Data_Analytics`
 
-**Project Type:** Data Analytics / NLP
+**Project Type:** Data Analytics / NLP / Interactive Dashboard
 
-**Repository:** `CodeAlpha_Amazon_Reviews_Data_Analytics`
+**Internship:** CodeAlpha Data Analytics Internship
 
+````
